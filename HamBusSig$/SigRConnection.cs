@@ -10,8 +10,6 @@ namespace HamBusSig
     public HubConnection StartConnection(string url)
     {
 
-      Console.WriteLine("Start of SignalR test client");
-
       connection = new HubConnectionBuilder()
           .WithUrl(url)
           .WithAutomaticReconnect()
@@ -40,10 +38,11 @@ namespace HamBusSig
       return connection;
     }
 
-    public async void Login(string group)
+    public async void Login(string group, Action<string> cb = null)
     {
       try
       {
+        connection.On<string>("loginResponse", cb);
         await connection.InvokeAsync("Login", group);
       }
       catch (Exception ex)

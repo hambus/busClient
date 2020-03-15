@@ -10,6 +10,7 @@ namespace BusClientTest
     public static async Task Main(string[] args)
     {
       HubConnection connection;
+      
       var busConn = new SigRConnection();
       Console.WriteLine("Start of SignalR test client");
 
@@ -24,7 +25,10 @@ namespace BusClientTest
       };
       #endregion
 
-      busConn.Login("logging");
+      busConn.Login("logging", (foo) =>
+      {
+        Console.WriteLine($"This is an action: {foo}");
+      });
 
       Console.ReadKey();
 
