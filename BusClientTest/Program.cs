@@ -1,3 +1,4 @@
+using HamBusSig;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Threading.Tasks;
@@ -6,14 +7,14 @@ namespace BusClientTest
 {
   public class Program
   {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
       HubConnection connection;
+      var busConn = new SigRConnection();
       Console.WriteLine("Start of SignalR test client");
 
-      connection = new HubConnectionBuilder()
-          .WithUrl("http://localhost:7300/masterbus")
-          .Build();
+      connection = busConn.StartConnection("http://localhost:7300/masterbus");
+      await connection.StartAsync();
 
       #region snippet_ClosedRestart
       connection.Closed += async (error) =>
@@ -23,6 +24,7 @@ namespace BusClientTest
       };
       #endregion
 
+      busConn.Login("logging");
 
       Console.ReadKey();
 
