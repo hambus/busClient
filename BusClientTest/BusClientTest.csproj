@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HamBusSig$\HamBusSigR.csproj" />
+    <ProjectReference Include="..\HamBusSig\HamBusSigR.csproj" />
   </ItemGroup>
 
 
