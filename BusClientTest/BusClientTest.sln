@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusClientTest", "BusClientT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamBusSigR", "..\HamBusSig\HamBusSigR.csproj", "{B236452E-E3F3-41EF-A310-56B54341D217}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreHambusCommonLibrary", "..\..\commonLib\HambusCommonLibrary\CoreHambusCommonLibrary.csproj", "{92F2D28F-3B7C-4F06-9EA1-398556CC308A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B236452E-E3F3-41EF-A310-56B54341D217}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B236452E-E3F3-41EF-A310-56B54341D217}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B236452E-E3F3-41EF-A310-56B54341D217}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92F2D28F-3B7C-4F06-9EA1-398556CC308A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92F2D28F-3B7C-4F06-9EA1-398556CC308A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92F2D28F-3B7C-4F06-9EA1-398556CC308A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92F2D28F-3B7C-4F06-9EA1-398556CC308A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

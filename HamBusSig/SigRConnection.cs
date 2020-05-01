@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using HambusCommonLibrary;
+using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Threading.Tasks;
 
@@ -6,8 +7,8 @@ namespace HamBusSig
 {
   public class SigRConnection
   {
-    HubConnection connection;
-    public HubConnection StartConnection(string url)
+    private HubConnection connection;
+    public async Task<HubConnection> StartConnection(string url)
     {
 
       connection = new HubConnectionBuilder()
@@ -16,7 +17,8 @@ namespace HamBusSig
           .Build();
 
 
-      connection.Closed += async (error) =>
+
+        connection.Closed += async (error) =>
       {
         await Task.Delay(new Random().Next(0, 5) * 1000);
         await connection.StartAsync();
@@ -35,6 +37,18 @@ namespace HamBusSig
       {
         Console.WriteLine($"Got login message: {message}");
       });
+
+      try
+      {
+        await connection.StartAsync();
+
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine(ex.Message);
+      }
+
+      Login("radio");
       return connection;
     }
 
@@ -50,5 +64,20 @@ namespace HamBusSig
         Console.WriteLine($"Error: {ex.Message}");
       }
     }
+    public async void sendRigState(RigState state, Action<string> cb = null)
+    {
+      Console.WriteLine("Sending state");
+      try
+      {
+        if (cb != null)
+          connection.On<string>("loginResponse", cb);
+        await connection.InvokeAsync("RadioStateChange", state);
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine($"Error: {ex.Message}");
+      }
+    }
   }
 }
+
