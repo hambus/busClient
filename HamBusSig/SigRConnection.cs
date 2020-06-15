@@ -1,6 +1,7 @@
 ﻿using HambusCommonLibrary;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HamBusSig
@@ -48,18 +49,22 @@ namespace HamBusSig
       {
         Console.WriteLine(ex.Message);
       }
-
-      //Login("radio");
+      // this needs to go else where
+      var groupList = new List<string>();
+      groupList.Add("radio");
+      groupList.Add("logging");
+      groupList.Add("virtual");
+      Login("Flex300", groupList);
 
       return connection;
     }
 
-    public async void Login(string group, Action<string> cb = null)
+    public async void Login(string name, List<string> group, Action<string> cb = null)
     {
       try
       {
         connection.On<string>("loginResponse", cb);
-        //await connection.InvokeAsync("Login", group);
+        await connection.InvokeAsync("Login", name, group);
       }
       catch (Exception ex)
       {
