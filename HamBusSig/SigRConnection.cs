@@ -7,7 +7,7 @@ namespace HamBusSig
 {
   public class SigRConnection
   {
-    private HubConnection connection;
+    public HubConnection connection;
     public async Task<HubConnection> StartConnection(string url)
     {
 
@@ -18,7 +18,7 @@ namespace HamBusSig
 
 
 
-        connection.Closed += async (error) =>
+      connection.Closed += async (error) =>
       {
         await Task.Delay(new Random().Next(0, 5) * 1000);
         await connection.StartAsync();
@@ -33,22 +33,24 @@ namespace HamBusSig
         return Task.CompletedTask;
       };
 
-      connection.On<string>("loginResponse", (message) =>
-      {
-        Console.WriteLine($"Got login message: {message}");
-      });
+
 
       try
       {
         await connection.StartAsync();
-
+        Console.WriteLine($"connection id: {connection.ConnectionId}");
+        connection.On<string>("loginResponse", (message) =>
+        {
+          Console.WriteLine($"Got login message: {message}");
+        });
       }
       catch (Exception ex)
       {
         Console.WriteLine(ex.Message);
       }
 
-      Login("radio");
+      //Login("radio");
+
       return connection;
     }
 
@@ -57,12 +59,16 @@ namespace HamBusSig
       try
       {
         connection.On<string>("loginResponse", cb);
-        await connection.InvokeAsync("Login", group);
+        //await connection.InvokeAsync("Login", group);
       }
       catch (Exception ex)
       {
         Console.WriteLine($"Error: {ex.Message}");
       }
+    }
+    private void loginRespCB(string message)
+    {
+      Console.WriteLine(message);
     }
     public async void sendRigState(RigState state, Action<string> cb = null)
     {
