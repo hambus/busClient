@@ -8,7 +8,7 @@ namespace HamBusSig
 {
   public class SigRConnection
   {
-    public HubConnection connection;
+    public HubConnection? connection = null;
     public async Task<HubConnection> StartConnection(string url)
     {
 
@@ -48,9 +48,10 @@ namespace HamBusSig
       catch (Exception ex)
       {
         Console.WriteLine(ex.Message);
+        Environment.Exit(-1);
       }
       // this needs to go else where
-      var groupList = new List<string>();
+      List<string>? groupList = new List<string>();
       groupList.Add("radio");
       groupList.Add("logging");
       groupList.Add("virtual");
@@ -59,7 +60,7 @@ namespace HamBusSig
       return connection;
     }
 
-    public async void Login(string name, List<string> group, Action<string> cb = null)
+    public async void Login(string name, List<string>? group, Action<string>? cb = null)
     {
       try
       {
@@ -75,7 +76,7 @@ namespace HamBusSig
     {
       Console.WriteLine(message);
     }
-    public async void sendRigState(RigState state, Action<string> cb = null)
+    public async void sendRigState(RigState state, Action<string>? cb = null)
     {
       Console.WriteLine("Sending state");
       try
