@@ -1,8 +1,9 @@
-﻿using HambusCommonLibrary;
-using Microsoft.AspNetCore.SignalR.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CoreHambusCommonLibrary;
+using HambusCommonLibrary;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace HamBusSig
 {
@@ -17,8 +18,6 @@ namespace HamBusSig
           .WithAutomaticReconnect()
           .Build();
 
-
-
       connection.Closed += async (error) =>
       {
         await Task.Delay(new Random().Next(0, 5) * 1000);
@@ -28,10 +27,10 @@ namespace HamBusSig
       {
         Console.WriteLine($"Connection Lost attempting to reconnect: {error.Message}");
 
-        // Notify users the connection was lost and the client is reconnecting.
-        // Start queuing or dropping messages.
+              // Notify users the connection was lost and the client is reconnecting.
+              // Start queuing or dropping messages.
 
-        return Task.CompletedTask;
+              return Task.CompletedTask;
       };
 
 
