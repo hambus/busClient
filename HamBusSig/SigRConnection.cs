@@ -39,10 +39,10 @@ namespace HamBusSig
       {
         await connection.StartAsync();
         Console.WriteLine($"connection id: {connection.ConnectionId}");
-        connection.On<string>("loginResponse", (message) =>
-        {
-          Console.WriteLine($"Got login message: {message}");
-        });
+        //connection.On<string>("loginResponse", (message) =>
+        //{
+        //  Console.WriteLine($"Got login message: {message}");
+        //});
       }
       catch (Exception ex)
       {
