@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CoreHambusCommonLibrary;
+using CoreHambusCommonLibrary.Model;
 using HambusCommonLibrary;
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -33,16 +34,10 @@ namespace HamBusSig
               return Task.CompletedTask;
       };
 
-
-
       try
       {
         await connection.StartAsync();
-        Console.WriteLine($"connection id: {connection.ConnectionId}");
-        //connection.On<string>("loginResponse", (message) =>
-        //{
-        //  Console.WriteLine($"Got login message: {message}");
-        //});
+        connection.On<HamBusError>("ErrorReport", ErrorReport);
       }
       catch (Exception ex)
       {
@@ -50,27 +45,18 @@ namespace HamBusSig
         Environment.Exit(-1);
       }
       // this needs to go else where
-      List<string>? groupList = new List<string>();
-      groupList.Add("radio");
-      groupList.Add("logging");
-      groupList.Add("virtual");
-      Login("Flex300", groupList);
+
 
       return connection;
     }
 
-    public async void Login(string name, List<string>? group, Action<string>? cb = null)
+    private void ErrorReport(HamBusError error)
     {
-      try
-      {
-        connection.On<string>("loginResponse", cb);
-        await connection.InvokeAsync("Login", name, group);
-      }
-      catch (Exception ex)
-      {
-        Console.WriteLine($"Error: {ex.Message}");
-      }
+      Console.WriteLine($"Error: {error.ErrorNum}: >{error.Message}<");
+      Environment.Exit((int) error.ErrorNum);
+
     }
+
     private void loginRespCB(string message)
     {
       Console.WriteLine(message);
