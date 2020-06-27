@@ -52,7 +52,7 @@ namespace HamBusSig
 
     private void ErrorReport(HamBusError error)
     {
-      Console.WriteLine($"Error: {error.ErrorNum}: >{error.Message}<");
+      Console.WriteLine($"Error: {error.ErrorNum}: {error.Message}");
       Environment.Exit((int) error.ErrorNum);
 
     }
